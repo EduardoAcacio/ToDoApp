@@ -4,10 +4,10 @@ import './App.css';
 class App extends Component {
 
   state = {
-    todoList :[]
+    todoList: []
   }
 
-  render(){
+  render() {
     return (
       <div>
         <div className="jumbotron jumbotron-fluid py-2">
@@ -30,7 +30,7 @@ class App extends Component {
                 (item, index) => {
                   return <li className="list-group-item" key={index}>
                     {item}
-                    <button className="btn btn-sm btn-outline-danger float-right" onClick={}> Delete </button>
+                    <button className="btn btn-sm btn-outline-danger float-right" onClick={(event) => {this.deleteToDoTask(event, index)}}> Delete </button>
                   </li>
                 }
               )
@@ -42,14 +42,20 @@ class App extends Component {
 
 handleSubmit = (event) => {
     var taskDesc = event.target.elements.todoTask.value;
-    if(todoTask.length > 0) {
+    if (taskDesc.length > 0) {
       this.setState({
-        todoList:[...this.state.todoList, taskDesc]
+        todoList: [...this.state.todoList, taskDesc]
       })
+      event.target.reset();
     }
-    event.target.reset();
+    event.preventDefault();
   }
-  event.preventDefault();
+
+  deleteToDoTask = (event,index) => {
+    var taskArray = [...this.state.todoList]
+    taskArray.splice(index,1)
+    this.setState({todoList:taskArray})
+  }
 }
 
 
